@@ -7,13 +7,15 @@ const port = 3000
 const app = express()
 const router = express.Router()
 
+const usersRouter = require('./routes/users')
+
 connect()
 
 router.get('/', (req, res) => {
     res.send('3조 서버 오픈 테스트')
 })
 
-app.use('/api', bodyParser.json(), router)
+app.use('/api', bodyParser.json(), [router, usersRouter])
 // app.use(express.static("./assets"));
 
 const myLogger = function (req, res, next) {
