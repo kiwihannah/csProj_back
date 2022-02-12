@@ -1,4 +1,3 @@
-'user strict'
 const express = require('express')
 const connect = require('./models')
 const bodyParser = require('body-parser')
