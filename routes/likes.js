@@ -4,7 +4,7 @@ const router = express.Router()
 const authMiddleware = require('./auth-middleware')
 
 // 답변 카드 좋아요
-router.post('/questions/:questionId/answers/:answerId/likes', authMiddleware, async (req, res) => {
+router.post('/answers/:answerId/likes', authMiddleware, async (req, res) => {
     const { answerId } = req.params
     const userId = res.locals.user[0].userId
 
@@ -22,7 +22,7 @@ router.post('/questions/:questionId/answers/:answerId/likes', authMiddleware, as
 })
 
 // 답변 카드 좋아요 취소
-router.delete('/questions/:questionId/answers/:answerId/likes', authMiddleware, async (req, res) => {
+router.delete('/answers/:answerId/likes', authMiddleware, async (req, res) => {
     const { answerId } = req.params
     const userId = res.locals.user[0].userId
 
@@ -32,7 +32,7 @@ router.delete('/questions/:questionId/answers/:answerId/likes', authMiddleware, 
 
 
 // 답변 카드 별 좋아요 수 불러오기
-router.get('/questions/:questionId/answers/:answerId/likes', async (req, res) => {
+router.get('/answers/:answerId/likes', async (req, res) => {
     const { answerId } = req.params
 
     const likes = await Like.find({ answerId })

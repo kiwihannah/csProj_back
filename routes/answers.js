@@ -31,7 +31,7 @@ router.get('/questions/:questionId/answers', async (req, res) => {
 })
 
 // 답변 카드 삭제
-router.delete('/questions/:questionId/answers/:answerId', authMiddleware, async (req, res) => {
+router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
     const { answerId } = req.params
     const author = res.locals.user[0].userId
     
@@ -50,7 +50,7 @@ router.delete('/questions/:questionId/answers/:answerId', authMiddleware, async 
 
 
 // 답변 카드 수정
-router.patch('/questions/:questionId/answers/:answerId', authMiddleware, async (req, res) => {
+router.patch('/answers/:answerId', authMiddleware, async (req, res) => {
     const { answerId } = req.params
     const author = res.locals.user[0].userId
     const { answer } = req.body
