@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const authMiddleware = require('./auth-middleware')
 
 // 회원 가입
 router.post('/signup', async (req, res) => {
@@ -41,6 +42,14 @@ router.post('/auth', async (req, res) => {
 
     const token = jwt.sign({ userId: user.userId }, 'wlrmadnflauswjqdms')
     res.send({ token })
+})
+
+// 로그인 정보 불러오기
+router.post('/auth/me', authMiddleware, async (req, res) => {
+    const { user } = res.locals
+    res.send({
+        userId: user[0].userId
+    })
 })
 
 module.exports = router
