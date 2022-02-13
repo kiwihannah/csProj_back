@@ -7,6 +7,9 @@ const questionSchema = new mongoose.Schema({
     author: {
         type: String
     },
+    date: {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('Question', questionSchema)

@@ -13,14 +13,15 @@ router.get('/questions', async (req, res) => {
 router.post('/questions', authMiddleware, async (req, res) => {
     const author = res.locals.user[0].userId
     const { questionTitle } = req.body
-    
+    const date = new Date().toISOString().slice(0,10)
+
     if (!questionTitle) {
         return res.status(400).send({
             errorMessage: '내용을 입력해주세요.'
         })
     }
 
-    const question = new Question({ questionTitle, author })
+    const question = new Question({ questionTitle, author, date })
     await question.save()
 
     res.send({

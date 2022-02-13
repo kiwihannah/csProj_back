@@ -8,6 +8,7 @@ router.post('/questions/:questionId/answers', authMiddleware, async (req, res) =
     const { questionId } = req.params
     const author = res.locals.user[0].userId
     const { answer } = req.body
+    const date = new Date().toISOString().slice(0,10)
 
     if (!answer) {
         return res.status(400).send({
@@ -15,7 +16,7 @@ router.post('/questions/:questionId/answers', authMiddleware, async (req, res) =
         })
     }
 
-    const answerToCreate = new Answer({ questionId, answer, author })
+    const answerToCreate = new Answer({ questionId, answer, author, date })
     await answerToCreate.save()
     
     res.status(201).send({
