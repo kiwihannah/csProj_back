@@ -1,6 +1,7 @@
 const express = require('express')
 const connect = require('./models')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 const router = express.Router()
@@ -12,6 +13,8 @@ const likesRouter = require('./routes/likes')
 
 const port = 3000
 connect()
+
+app.use(cors())
 
 router.get('/', (req, res) => {
     res.send('3조 서버 오픈 테스트')
