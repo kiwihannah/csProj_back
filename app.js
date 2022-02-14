@@ -15,11 +15,12 @@ const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 const likesRouter = require('./routes/likes')
 
-app.use( // url -> localhost/swagger
-  "/swagger",
+app.use(
+  // url -> localhost/swagger
+  '/swagger',
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
-);
+)
 
 const port = 3000
 connect()
@@ -32,7 +33,12 @@ router.get('/', (req, res) => {
   res.send('3조 서버 오픈 테스트')
 })
 
-app.use('/api', bodyParser.json(), [router, usersRouter, questionsRouter, answersRouter, likesRouter])
+app.use('/api', bodyParser.json(), [
+  router,
+  usersRouter,
+  questionsRouter,
+  answersRouter,
+])
 // app.use(express.static("./assets"));
 
 const myLogger = function (req, res, next) {
