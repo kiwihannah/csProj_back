@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
+// require('dotenv').config()
 
 const connect = () => {
     mongoose
-        .connect(process.env.DB_URL, { ignoreUndefined: true })
+        .connect("mongodb://test:test@3.35.169.150:27017/cheat-sheet?authSource=admin", { ignoreUndefined: true })
         .catch((err) => {
             console.log(err)
         })
