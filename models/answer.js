@@ -7,7 +7,10 @@ const answerSchema = new mongoose.Schema({
     answer: {
         type: String,
     },
-    author: {
+    userId: {
+        type: String,
+    },
+    nickname: {
         type: String,
     },
     date: {

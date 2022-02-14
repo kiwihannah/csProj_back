@@ -6,7 +6,8 @@ const authMiddleware = require('./auth-middleware')
 // 답변 카드 생성
 router.post('/questions/:questionId/answers', authMiddleware, async (req, res) => {
     const { questionId } = req.params
-    const author = res.locals.user[0].userId
+    const userId = res.locals.user[0].userId
+    const nickname = res.locals.user[0].nickname
     const { answer } = req.body
     const date = new Date().toISOString().slice(0,10)
 
@@ -16,7 +17,7 @@ router.post('/questions/:questionId/answers', authMiddleware, async (req, res) =
         })
     }
 
-    const answerToCreate = new Answer({ questionId, answer, author, date })
+    const answerToCreate = new Answer({ questionId, answer, userId, nickname, date })
     await answerToCreate.save()
     
     res.status(201).send({

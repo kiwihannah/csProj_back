@@ -4,7 +4,10 @@ const questionSchema = new mongoose.Schema({
     questionTitle: {
         type: String
     },
-    author: {
+    userId: {
+        type: String
+    },
+    nickname: {
         type: String
     },
     date: {

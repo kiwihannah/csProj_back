@@ -15,6 +15,8 @@ const port = 3000
 connect()
 
 app.use(cors())
+// 리액트 배포 이후 아래처럼 origin 적어줄 것 (보안 강화)
+// app.use(cors({ origin: 허용 오리진 주소 }))
 
 router.get('/', (req, res) => {
     res.send('3조 서버 오픈 테스트')

@@ -35,7 +35,8 @@ router.get('/questions', async (req, res) => {
 
 // 면접 질문 데이터 생성
 router.post('/questions', authMiddleware, async (req, res) => {
-    const author = res.locals.user[0].userId
+    const userId = res.locals.user[0].userId
+    const nickname = res.locals.user[0].nickname
     const { questionTitle } = req.body
     const date = new Date().toISOString().slice(0, 10)
 
@@ -45,7 +46,7 @@ router.post('/questions', authMiddleware, async (req, res) => {
         })
     }
 
-    const question = new Question({ questionTitle, author, date })
+    const question = new Question({ questionTitle, userId, nickname, date })
     await question.save()
 
     res.send({

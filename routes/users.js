@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 // 회원 가입
 router.post('/signup', async (req, res) => {
-    const { userId, userPw, userPwConfirm } = req.body
+    const { userId, nickname, userPw, userPwConfirm } = req.body
 
     // password confirm 확인
     if (userPw !== userPwConfirm) {
@@ -26,7 +26,7 @@ router.post('/signup', async (req, res) => {
 
     const encryptedUserPw = bcrypt.hashSync(userPw, 10)
 
-    const user = new User({ userId, userPw: encryptedUserPw })
+    const user = new User({ userId, nickname, userPw: encryptedUserPw })
     await user.save()
     res.status(201).send({
         message: '회원 가입 완료!'
@@ -38,7 +38,7 @@ router.post('/auth', async (req, res) => {
     const { userId, userPw } = req.body
     
     const user = await User.findOne({ userId })
-
+    
     if (!user) {
         return res.status(400).send({
             errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
@@ -46,7 +46,7 @@ router.post('/auth', async (req, res) => {
     }
 
     const compareUserPw = bcrypt.compareSync(userPw, user.userPw)
-    
+    console.log(compareUserPw)
     if (!compareUserPw) {
         return res.status(400).send({
             errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
@@ -61,7 +61,8 @@ router.post('/auth', async (req, res) => {
 router.post('/auth/me', authMiddleware, async (req, res) => {
     const { user } = res.locals
     res.send({
-        userId: user[0].userId
+        userId: user[0].userId,
+        nickname: user[0].nickname
     })
 })
 
