@@ -3,6 +3,7 @@ const User = require('../models/user')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const authMiddleware = require('./auth-middleware')
+const bcrypt = require('bcrypt')
 
 // 회원 가입
 router.post('/signup', async (req, res) => {
@@ -23,7 +24,9 @@ router.post('/signup', async (req, res) => {
         })
     }
 
-    const user = new User({ userId, userPw })
+    const encryptedUserPw = bcrypt.hashSync(userPw, 10)
+
+    const user = new User({ userId, userPw: encryptedUserPw })
     await user.save()
     res.status(201).send({
         message: '회원 가입 완료!'
@@ -34,9 +37,17 @@ router.post('/signup', async (req, res) => {
 router.post('/auth', async (req, res) => {
     const { userId, userPw } = req.body
     
-    const user = await User.findOne({ userId, userPw })
+    const user = await User.findOne({ userId })
 
     if (!user) {
+        return res.status(400).send({
+            errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
+        })
+    }
+
+    const compareUserPw = bcrypt.compareSync(userPw, user.userPw)
+    
+    if (!compareUserPw) {
         return res.status(400).send({
             errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
         })
