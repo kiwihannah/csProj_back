@@ -13,27 +13,32 @@ const port = 3000
 connect()
 
 router.get('/', (req, res) => {
-    res.send('3조 서버 오픈 테스트')
+  res.send('3조 서버 오픈 테스트')
 })
 
-app.use('/api', bodyParser.json(), [router, usersRouter, questionsRouter, answersRouter])
+app.use('/api', bodyParser.json(), [
+  router,
+  usersRouter,
+  questionsRouter,
+  answersRouter,
+])
 // app.use(express.static("./assets"));
 
 const myLogger = function (req, res, next) {
-    console.log(
-        new Date().toLocaleTimeString(),
-        '| Request URL:',
-        req.originalUrl
-    )
-    next()
+  console.log(
+    new Date().toLocaleTimeString(),
+    '| Request URL:',
+    req.originalUrl
+  )
+  next()
 }
 app.use(myLogger)
 
 app.listen(port, () => {
-    console.log(
-        new Date().toLocaleTimeString(),
-        '|',
-        port,
-        ': server has been connected'
-    )
+  console.log(
+    new Date().toLocaleTimeString(),
+    '|',
+    port,
+    ': server has been connected'
+  )
 })
