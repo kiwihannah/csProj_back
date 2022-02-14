@@ -1,5 +1,6 @@
 const express = require('express')
 const Answer = require('../models/answer')
+const Like = require('../models/like')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
 
@@ -29,7 +30,30 @@ router.post('/questions/:questionId/answers', authMiddleware, async (req, res) =
 router.get('/questions/:questionId/answers', async (req, res) => {
     const { questionId } = req.params
     const answers = await Answer.find({ questionId })
-    res.json({ answers })
+
+    // 각 답변 당 좋아요 개수 counting
+    const likesPerAnswer = {}
+    for (const answer of answers) {
+        likesPerAnswer[answer._id] = 0
+    }
+
+    const likes = await Like.find({})
+    for (const like of likes) {
+        likesPerAnswer[like.answerId]++
+    }
+
+    // 좋아요 개수 많은 답변 순으로 정렬
+    const sortedAnswerIds = Object.entries(likesPerAnswer)
+        .sort((a, b) => b[1] - a[1])
+        .map((x) => x[0])
+
+    const sortedAnswers = []
+    for (const answerId of sortedAnswerIds) {
+        const answer = await Answer.findOne({ _id: answerId })
+        sortedAnswers.push(answer)
+    }
+
+    res.json({ answers: sortedAnswers })
 })
 
 // 답변 카드 삭제
