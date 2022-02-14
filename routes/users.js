@@ -7,11 +7,7 @@ const bcrypt = require('bcrypt')
 
 // 회원 가입
 router.post('/signup', async (req, res) => {
-<<<<<<< HEAD
-  const { userId, nickname, userPw, userPwConfirm } = req.body
-=======
     const { userId, nickname, userPw, userPwConfirm } = req.body
->>>>>>> 74a6fec416ca48b2e9810d84ebd52e744bbe0f3b
 
   // password confirm 확인
   if (userPw !== userPwConfirm) {
@@ -28,11 +24,6 @@ router.post('/signup', async (req, res) => {
     })
   }
 
-<<<<<<< HEAD
-  const user = new User({ userId, nickname, userPw })
-  await user.save()
-  res.status(201).send({})
-=======
     const encryptedUserPw = bcrypt.hashSync(userPw, 10)
 
     const user = new User({ userId, nickname, userPw: encryptedUserPw })
@@ -40,25 +31,10 @@ router.post('/signup', async (req, res) => {
     res.status(201).send({
         message: '회원 가입 완료!'
     })
->>>>>>> 74a6fec416ca48b2e9810d84ebd52e744bbe0f3b
 })
 
 // 로그인
 router.post('/auth', async (req, res) => {
-<<<<<<< HEAD
-  const { userId, userPw } = req.body
-
-  const user = await User.findOne({ userId, userPw })
-
-  if (!user) {
-    return res.status(400).send({
-      errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
-    })
-  }
-
-  const token = jwt.sign({ userId: user.userId }, 'wlrmadnflauswjqdms')
-  res.send({ token })
-=======
     const { userId, userPw } = req.body
     
     const user = await User.findOne({ userId })
@@ -79,23 +55,15 @@ router.post('/auth', async (req, res) => {
 
     const token = jwt.sign({ userId: user.userId }, 'wlrmadnflauswjqdms')
     res.send({ token })
->>>>>>> 74a6fec416ca48b2e9810d84ebd52e744bbe0f3b
 })
 
 // 로그인 정보 불러오기
 router.post('/auth/me', authMiddleware, async (req, res) => {
-<<<<<<< HEAD
-  const { user } = res.locals
-  res.send({
-    userId: user[0].userId,
-  })
-=======
     const { user } = res.locals
     res.send({
         userId: user[0].userId,
         nickname: user[0].nickname
     })
->>>>>>> 74a6fec416ca48b2e9810d84ebd52e744bbe0f3b
 })
 
 module.exports = router
