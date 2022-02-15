@@ -11,7 +11,7 @@ router.post('/answers/:answerId/likes', authMiddleware, async (req, res) => {
     // 이미 좋아요한 경우
     const existLike = await Like.findOne({ answerId, userId })
     if (existLike) {
-        return res.status(400).send({
+        return res.status(400).json({
             errorMessage: '이 답변에 이미 좋아요 했습니다.'
         })
     }

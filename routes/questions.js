@@ -41,7 +41,7 @@ router.post('/questions', authMiddleware, async (req, res) => {
     const date = new Date().toISOString().slice(0, 10)
 
     if (!questionTitle) {
-        return res.status(400).send({
+        return res.status(400).json({
             errorMessage: '내용을 입력해주세요.',
         })
     }
@@ -49,7 +49,7 @@ router.post('/questions', authMiddleware, async (req, res) => {
     const question = new Question({ questionTitle, userId, nickname, date })
     await question.save()
 
-    res.send({
+    res.json({
         message: '카드가 생성되었습니다.',
     })
 })
