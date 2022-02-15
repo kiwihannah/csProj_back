@@ -49,7 +49,9 @@ router.get('/questions/:questionId/answers', async (req, res) => {
 
   const likes = await Like.find({})
   for (const like of likes) {
-    likesPerAnswer[like.answerId]++
+    if (likesPerAnswer[like.answerId]) {
+        likesPerAnswer[like.answerId]++
+    }
   }
 
   // 좋아요 개수 많은 답변 순으로 정렬

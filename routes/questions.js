@@ -6,7 +6,14 @@ const authMiddleware = require('./auth-middleware')
 
 // 면접 질문 리스트 전체 불러오기
 router.get('/questions', async (req, res) => {
-  const questions = await Question.find({})
+  // 카테고리에 해당하는 질문 찾기
+  const category = req.query.category
+  let questions
+  if (!category) {
+    questions = await Question.find({})
+  } else {
+    questions = await Question.find({ category })
+  }
 
   // 각 질문 당 답변 개수 counting
   const answersPerQuestion = {}
@@ -16,14 +23,16 @@ router.get('/questions', async (req, res) => {
 
   const answers = await Answer.find({})
   for (const answer of answers) {
-    answersPerQuestion[answer.questionId]++
+    if (answersPerQuestion[answer.questionId]) {
+        answersPerQuestion[answer.questionId]++
+    }
   }
 
   // 답변 개수 많은 질문 순으로 정렬
   const sortedQuestionIds = Object.entries(answersPerQuestion)
     .sort((a, b) => b[1] - a[1])
     .map((x) => x[0])
-
+  
   const sortedQuestions = []
   for (const questionId of sortedQuestionIds) {
     const question = await Question.findOne({ _id: questionId })
@@ -37,16 +46,20 @@ router.get('/questions', async (req, res) => {
 router.post('/questions', authMiddleware, async (req, res) => {
   const userId = res.locals.user[0].userId
   const nickname = res.locals.user[0].nickname
-  const { questionTitle } = req.body
+  let { questionTitle, category } = req.body
   const date = new Date().toISOString().slice(0, 10)
-
+  
   if (!questionTitle) {
     return res.status(400).json({
       errorMessage: '내용을 입력해주세요.',
     })
   }
 
-  const question = new Question({ questionTitle, userId, nickname, date })
+  if (!category) {
+    category = null
+  }
+
+  const question = new Question({ questionTitle, userId, nickname, category, date })
   await question.save()
 
   res.json({

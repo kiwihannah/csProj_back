@@ -13,6 +13,9 @@ const questionSchema = new mongoose.Schema({
   date: {
     type: String,
   },
+  category: {
+    type: String
+  }
 })
 
 module.exports = mongoose.model('Question', questionSchema)
