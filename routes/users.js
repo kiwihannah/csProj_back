@@ -54,7 +54,7 @@ router.post('/auth', async (req, res) => {
   }
 
   const token = jwt.sign({ userId: user.userId }, 'wlrmadnflauswjqdms')
-  res.json({ token })
+  res.json({ token, message: '로그인 성공!' })
 })
 
 // 로그인 정보 불러오기
