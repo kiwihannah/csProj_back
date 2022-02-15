@@ -16,7 +16,7 @@ router.post(
     const date = new Date().toISOString().slice(0, 10)
 
     if (!answer) {
-      return res.status(400).send({
+      return res.status(400).json({
         errorMessage: '내용을 입력해주세요.',
       })
     }
@@ -30,7 +30,7 @@ router.post(
     })
     await answerToCreate.save()
 
-    res.status(201).send({
+    res.status(201).json({
       message: '답변이 생성되었습니다.',
     })
   }
@@ -74,12 +74,12 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   try {
     await Answer.deleteOne({ _id: answerId, author })
   } catch (error) {
-    return res.status(400).send({
+    return res.status(400).json({
       errorMessage: '권한이 없습니다.',
     })
   }
 
-  res.send({
+  res.json({
     message: '삭제가 완료되었습니다.',
   })
 })
@@ -93,13 +93,13 @@ router.patch('/answers/:answerId', authMiddleware, async (req, res) => {
   const answerToPatch = await Answer.findOne({ _id: answerId, author })
 
   if (!answerToPatch) {
-    return res.status(400).send({
+    return res.status(400).json({
       errorMessage: '권한이 없습니다.',
     })
   }
   answerToPatch.answer = answer
   await answerToPatch.save()
-  res.send({
+  res.json({
     message: '답변이 수정되었습니다.',
   })
 })
