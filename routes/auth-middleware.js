@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+require('dotenv').config()
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const { userId } = jwt.verify(tokenValue, 'wlrmadnflauswjqdms')
+    const { userId } = jwt.verify(tokenValue, process.env.JWT_SIGNATURE)
     User.find({ userId }).then((user) => {
       res.locals.user = user
       next()
