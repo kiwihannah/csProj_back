@@ -38,7 +38,7 @@ const authMiddleware = require('./auth-middleware')
  *       description: "answerId"
  *       type: "string"
  *     responses:
- *       "200":
+ *       "201":
  *         description: "successful operation"
  */
 // 답변 카드 좋아요

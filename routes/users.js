@@ -85,6 +85,27 @@ router.post('/signup', async (req, res) => {
   })
 })
 
+/**
+ * @swagger
+ * /api/auth:
+ *   post:
+ *     description: sign in
+ *     tags: [Users]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "userId"
+ *       in: "body"
+ *       description: "userId"
+ *       type: "string"
+ *     - name: "userPw"
+ *       in: "body"
+ *       description: "userPw"
+ *       type: "string"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+ */
 // 로그인
 router.post('/auth', async (req, res) => {
   const { userId, userPw } = req.body
@@ -109,6 +130,23 @@ router.post('/auth', async (req, res) => {
   res.json({ token, message: '로그인 성공!' })
 })
 
+/**
+ * @swagger
+ * /api/auth/me:
+ *   post:
+ *     description: authenticate user
+ *     tags: [Users]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "user"
+ *       in: "localstorage"
+ *       description: "user"
+ *       type: "object"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+ */
 // 로그인 정보 불러오기
 router.post('/auth/me', authMiddleware, async (req, res) => {
   const { user } = res.locals
