@@ -19,7 +19,7 @@ const timeFromNow = require('./time-from-now')
  *                 properties:
  *                     id:
  *                         type: object
- *                         description: The auto-generated id of the User table.
+ *                         description: The auto-generated id of the Questions table.
  *                     questionTitle:
  *                         type: string
  *                         description: question it self

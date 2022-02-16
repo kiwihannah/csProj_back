@@ -15,7 +15,7 @@ const authMiddleware = require('./auth-middleware')
  *                 properties:
  *                     id:
  *                         type: object
- *                         description: The auto-generated id of the User table.
+ *                         description: The auto-generated id of the Likes table.
  *                     answerId:
  *                         type: string
  *                         description: answer it self
