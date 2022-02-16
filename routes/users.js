@@ -7,29 +7,29 @@ const bcrypt = require('bcrypt')
 require('dotenv').config()
 
 /** schema 생성
-* @swagger
-*     components:
-*         schemas:
-*             Users:
-*                 type: object
-*                 required:
-*                     - userId
-*                     - nickname
-*                     - userPw
-*                 properties:
-*                     id:
-*                         type: object
-*                         description: The auto-generated id on the User table.
-*                     userId:
-*                         type: string
-*                         description: The user id for log-in.
-*                     nickname:
-*                         type: string
-*                         description: Who wrote this post?
-*                     userPw:
-*                         type: string
-*                         description: The user pw for log-in
-*/
+ * @swagger
+ *     components:
+ *         schemas:
+ *             Users:
+ *                 type: object
+ *                 required:
+ *                     - userId
+ *                     - nickname
+ *                     - userPw
+ *                 properties:
+ *                     id:
+ *                         type: object
+ *                         description: The auto-generated id on the User table.
+ *                     userId:
+ *                         type: string
+ *                         description: The user id for log-in.
+ *                     nickname:
+ *                         type: string
+ *                         description: Who wrote this post?
+ *                     userPw:
+ *                         type: string
+ *                         description: The user pw for log-in
+ */
 
 /**
  * @swagger
@@ -55,8 +55,8 @@ require('dotenv').config()
  *     responses:
  *       "201":
  *         description: "successful operation"
- *     
-*/
+ *
+ */
 // 회원 가입
 router.post('/signup', async (req, res) => {
   const { userId, nickname, userPw, userPwConfirm } = req.body
@@ -84,7 +84,6 @@ router.post('/signup', async (req, res) => {
     message: '회원 가입 완료!',
   })
 })
-
 
 // 로그인
 router.post('/auth', async (req, res) => {

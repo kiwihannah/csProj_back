@@ -1,8 +1,9 @@
-const swaggerUi = require('swagger-ui-express'); 
-const swaggereJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express')
+const swaggereJsdoc = require('swagger-jsdoc')
 
 const options = {
-  swaggerDefinition: { //json or yaml
+  swaggerDefinition: {
+    //json or yaml
     openapi: '3.0.0',
     info: {
       title: 'Express Service with Swagger!',
@@ -15,8 +16,7 @@ const options = {
       },
     ],
   },
-  apis: ['./routes/*.js', './swagger/*']
+  apis: ['./routes/*.js', './swagger/*'],
 }
-const specs = swaggereJsdoc(options);
-module.exports = { swaggerUi, specs };
-
+const specs = swaggereJsdoc(options)
+module.exports = { swaggerUi, specs }

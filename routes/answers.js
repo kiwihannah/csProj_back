@@ -5,39 +5,39 @@ const router = express.Router()
 const authMiddleware = require('./auth-middleware')
 const timeFromNow = require('./time-from-now')
 
- //questionId, answer, userId, nickname, date
+//questionId, answer, userId, nickname, date
 /** schema 생성
-* @swagger
-*     components:
-*         schemas:
-*             Answers:
-*                 type: object
-*                 required:
-*                     - questionId
-*                     - answer
-*                     - userId
-*                     - nickname
-*                     - date
-*                 properties:
-*                     id:
-*                         type: object
-*                         description: The auto-generated id of the User table.
-*                     questionId:
-*                         type: string
-*                         description: The user posted questions.
-*                     answer:
-*                         type: string
-*                         description: answer for questions
-*                     userId:
-*                         type: string
-*                         description: answered user
-*                     nickname:
-*                         type: string
-*                         description: answered user nickname
-*                     date:
-*                         type: string
-*                         description: The date user answered
-*/
+ * @swagger
+ *     components:
+ *         schemas:
+ *             Answers:
+ *                 type: object
+ *                 required:
+ *                     - questionId
+ *                     - answer
+ *                     - userId
+ *                     - nickname
+ *                     - date
+ *                 properties:
+ *                     id:
+ *                         type: object
+ *                         description: The auto-generated id of the User table.
+ *                     questionId:
+ *                         type: string
+ *                         description: The user posted questions.
+ *                     answer:
+ *                         type: string
+ *                         description: answer for questions
+ *                     userId:
+ *                         type: string
+ *                         description: answered user
+ *                     nickname:
+ *                         type: string
+ *                         description: answered user nickname
+ *                     date:
+ *                         type: string
+ *                         description: The date user answered
+ */
 
 /**
  * @swagger
@@ -55,7 +55,7 @@ const timeFromNow = require('./time-from-now')
  *     responses:
  *       "200":
  *         description: "successful operation"
-*/
+ */
 // 답변 카드 생성
 router.post(
   '/questions/:questionId/answers',
@@ -104,7 +104,7 @@ router.post(
  *     responses:
  *       "200":
  *         description: "successful operation"
-*/
+ */
 // 모든 답변 카드 불러오기
 router.get('/questions/:questionId/answers', async (req, res) => {
   const { questionId } = req.params
@@ -119,7 +119,7 @@ router.get('/questions/:questionId/answers', async (req, res) => {
   const likes = await Like.find({})
   for (const like of likes) {
     if (likesPerAnswer[like.answerId]) {
-        likesPerAnswer[like.answerId]++
+      likesPerAnswer[like.answerId]++
     }
   }
 
@@ -155,7 +155,7 @@ router.get('/questions/:questionId/answers', async (req, res) => {
  *     responses:
  *       "200":
  *         description: "successful operation"
-*/
+ */
 // 답변 카드 삭제
 router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
@@ -194,7 +194,7 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
  *     responses:
  *       "200":
  *         description: "successful operation"
-*/
+ */
 // 답변 카드 수정
 router.patch('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params

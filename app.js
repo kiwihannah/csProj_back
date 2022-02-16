@@ -2,7 +2,7 @@ const express = require('express')
 const connect = require('./models')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const { swaggerUi, specs } = require('./swagger');
+const { swaggerUi, specs } = require('./swagger')
 
 const app = express()
 const router = express.Router()
@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 const likesRouter = require('./routes/likes')
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs))
 
 app.use(
   // url -> localhost/swagger
@@ -36,7 +36,7 @@ app.use('/api', bodyParser.json(), [
   usersRouter,
   questionsRouter,
   answersRouter,
-  likesRouter
+  likesRouter,
 ])
 // app.use(express.static("./assets"));
 
