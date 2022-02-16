@@ -13,7 +13,7 @@ router.post(
     const userId = res.locals.user[0].userId
     const nickname = res.locals.user[0].nickname
     const { answer } = req.body
-    const date = new Date().toISOString().slice(0, 10)
+    const date = new Date()
 
     if (!answer) {
       return res.status(400).json({
@@ -62,6 +62,8 @@ router.get('/questions/:questionId/answers', async (req, res) => {
   const sortedAnswers = []
   for (const answerId of sortedAnswerIds) {
     const answer = await Answer.findOne({ _id: answerId })
+    const date = answer.date
+    answer.date = timeFromNow(date)
     sortedAnswers.push(answer)
   }
 

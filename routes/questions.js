@@ -3,6 +3,7 @@ const Question = require('../models/question')
 const Answer = require('../models/answer')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
+const timeFromNow = require('./time-from-now')
 
 // 면접 질문 리스트 전체 불러오기
 router.get('/questions', async (req, res) => {
@@ -42,7 +43,9 @@ router.get('/questions', async (req, res) => {
   
   const sortedQuestions = []
   for (const questionId of sortedQuestionIds) {
-    const question = await Question.findOne({ _id: questionId })
+    let question = await Question.findOne({ _id: questionId })
+    const date = question.date
+    question.date = timeFromNow(date)
     sortedQuestions.push(question)
   }
 
@@ -54,7 +57,7 @@ router.post('/questions', authMiddleware, async (req, res) => {
   const userId = res.locals.user[0].userId
   const nickname = res.locals.user[0].nickname
   let { questionTitle, category } = req.body
-  const date = new Date().toISOString().slice(0, 10)
+  const date = new Date()
   
   if (!questionTitle) {
     return res.status(400).json({
