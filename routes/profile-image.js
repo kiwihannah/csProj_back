@@ -16,7 +16,7 @@ router.post('/upload', authMiddleware, upload.single('profile_image'), async (re
     res.send({})
 })
 
-// 프로필 사진 보여주기
+// 프로필 사진 url 보내주기
 router.post('/profile_image', authMiddleware, async (req, res) => {
     const userId = res.locals.user[0].userId
     const user = await User.findOne({ userId })
