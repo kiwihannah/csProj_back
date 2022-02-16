@@ -26,6 +26,20 @@ Project is created with:
 * node.js
 * react
 * mongoDB
+* dependencies
+```
+"dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.1",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2",
+    "swagger-editor": "^4.1.2"
+  }
+```
 	
 ## Setup
 To run this project, install it locally using npm:
