@@ -3,6 +3,7 @@ const Answer = require('../models/answer')
 const Like = require('../models/like')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
+const timeFromNow = require('./time-from-now')
 
  //questionId, answer, userId, nickname, date
 /** schema 생성
@@ -64,7 +65,7 @@ router.post(
     const userId = res.locals.user[0].userId
     const nickname = res.locals.user[0].nickname
     const { answer } = req.body
-    const date = new Date().toISOString().slice(0, 10)
+    const date = new Date()
 
     if (!answer) {
       return res.status(400).json({
@@ -117,7 +118,9 @@ router.get('/questions/:questionId/answers', async (req, res) => {
 
   const likes = await Like.find({})
   for (const like of likes) {
-    likesPerAnswer[like.answerId]++
+    if (likesPerAnswer[like.answerId]) {
+        likesPerAnswer[like.answerId]++
+    }
   }
 
   // 좋아요 개수 많은 답변 순으로 정렬
@@ -128,6 +131,8 @@ router.get('/questions/:questionId/answers', async (req, res) => {
   const sortedAnswers = []
   for (const answerId of sortedAnswerIds) {
     const answer = await Answer.findOne({ _id: answerId })
+    const date = answer.date
+    answer.date = timeFromNow(date)
     sortedAnswers.push(answer)
   }
 

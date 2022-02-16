@@ -36,6 +36,7 @@ app.use('/api', bodyParser.json(), [
   usersRouter,
   questionsRouter,
   answersRouter,
+  likesRouter
 ])
 // app.use(express.static("./assets"));
 

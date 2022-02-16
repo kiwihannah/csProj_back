@@ -4,6 +4,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const authMiddleware = require('./auth-middleware')
 const bcrypt = require('bcrypt')
+require('dotenv').config()
 
 /** schema 생성
 * @swagger
@@ -58,7 +59,7 @@ const bcrypt = require('bcrypt')
 */
 // 회원 가입
 router.post('/signup', async (req, res) => {
-    const { userId, nickname, userPw, userPwConfirm } = req.body
+  const { userId, nickname, userPw, userPwConfirm } = req.body
 
   // password confirm 확인
   if (userPw !== userPwConfirm) {
@@ -75,7 +76,7 @@ router.post('/signup', async (req, res) => {
     })
   }
 
-    const encryptedUserPw = bcrypt.hashSync(userPw, 10)
+  const encryptedUserPw = bcrypt.hashSync(userPw, 10)
 
   const user = new User({ userId, nickname, userPw: encryptedUserPw })
   await user.save()
@@ -87,35 +88,35 @@ router.post('/signup', async (req, res) => {
 
 // 로그인
 router.post('/auth', async (req, res) => {
-    const { userId, userPw } = req.body
-    
-    const user = await User.findOne({ userId })
-    
-    if (!user) {
-        return res.status(400).send({
-            errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
-        })
-    }
+  const { userId, userPw } = req.body
 
-    const compareUserPw = bcrypt.compareSync(userPw, user.userPw)
-    console.log(compareUserPw)
-    if (!compareUserPw) {
-        return res.status(400).send({
-            errorMessage: '아이디 또는 비밀번호를 확인해주세요.'
-        })
-    }
+  const user = await User.findOne({ userId })
 
-  const token = jwt.sign({ userId: user.userId }, 'wlrmadnflauswjqdms')
+  if (!user) {
+    return res.status(400).send({
+      errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
+    })
+  }
+
+  const compareUserPw = bcrypt.compareSync(userPw, user.userPw)
+  console.log(compareUserPw)
+  if (!compareUserPw) {
+    return res.status(400).send({
+      errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
+    })
+  }
+
+  const token = jwt.sign({ userId: user.userId }, process.env.JWT_SIGNATURE)
   res.json({ token, message: '로그인 성공!' })
 })
 
 // 로그인 정보 불러오기
 router.post('/auth/me', authMiddleware, async (req, res) => {
-    const { user } = res.locals
-    res.send({
-        userId: user[0].userId,
-        nickname: user[0].nickname
-    })
+  const { user } = res.locals
+  res.send({
+    userId: user[0].userId,
+    nickname: user[0].nickname,
+  })
 })
 
 module.exports = router
