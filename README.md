@@ -15,10 +15,10 @@ https://grape-acrylic-1b6.notion.site/3-SA-5b33700ba4184cb3a91efc301b359dc9
 ### demonstration on youtube
 ( ... )
 
-### db rel
+### db diagram
 ![image](https://user-images.githubusercontent.com/83942678/154225644-c5971690-3daa-4ed4-b01f-f6f04b2908e1.png)
 
-### api detail
+### api details
 ![image](https://user-images.githubusercontent.com/83942678/154225717-9e312ea2-7eb2-4f88-9ccc-62171cb10ab6.png)
 	
 ## Technologies
