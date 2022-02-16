@@ -161,13 +161,15 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
   const userId = res.locals.user[0].userId
 
-  try {
-    await Answer.deleteOne({ _id: answerId, userId })
-  } catch (error) {
+  const answer = await Answer.findOne({ answerId })
+
+  if (answer.userId !== userId) {
     return res.status(400).json({
       errorMessage: '권한이 없습니다.',
     })
   }
+
+  await Answer.deleteOne({ _id: answerId, userId })
 
   res.json({
     message: '삭제가 완료되었습니다.',
