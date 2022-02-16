@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 const likesRouter = require('./routes/likes')
-const profileImagesRouter = require('./routes/profile-image')
+//const profileImagesRouter = require('./routes/profile-image')
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs))
 
 app.use(
@@ -38,7 +38,7 @@ app.use('/api', bodyParser.json(), [
   questionsRouter,
   answersRouter,
   likesRouter,
-  profileImagesRouter
+  //profileImagesRouter
 ])
 // app.use(express.static("./assets"));
 
