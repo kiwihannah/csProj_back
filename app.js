@@ -2,10 +2,7 @@ const express = require('express')
 const connect = require('./models')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const swaggerUi = require('swagger-ui-express')
-const swaggerJsdoc = require('swagger-jsdoc')
-const swaggerOptions = require('./swagger')
-const specs = swaggerJsdoc(swaggerOptions)
+const { swaggerUi, specs } = require('./swagger');
 
 const app = express()
 const router = express.Router()
@@ -14,6 +11,7 @@ const usersRouter = require('./routes/users')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 const likesRouter = require('./routes/likes')
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(
   // url -> localhost/swagger
@@ -22,7 +20,7 @@ app.use(
   swaggerUi.setup(specs, { explorer: true })
 )
 
-const port = 3000
+const port = process.env.PORT
 connect()
 
 app.use(cors())

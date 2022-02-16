@@ -1,58 +1,99 @@
-const request = require('supertest')
-const router = require('../routes/users')
-const should = require('should')
-const models = require('../models/user')
+const assert = require('assert'); 
+const request = require('supertest');
+const Users = require("../user.modle");
+const app = require('../routes/users');
 
-describe('회원가입, 로그인 테스트 코드', () => {
-  test('회원가입 api testcode 작동 확인용', (done) => {
-    request(router)
-      .post('/api/signup')
-      .send({
-        userId: 'hannah1',
-        nickname: 'hannah',
-        userPw: 'hannah123',
-      })
-      .expect(201)
-      .end({ message: 'SUCCESS' })
-    done()
-  })
-  // test('생성된 유저 객체를 반환한다', ()=>{
-  //     body.should.have.property('userId');
-  // });
-  // test('입력한 nickname을 반환한다', ()=> {
-  //     body.should.have.property('userId', userId)
-  // });
+Users.init();
 
-  describe('실패시', () => {
-    it('userId 파라매터 누락시 400을 반환한다', (done) => {
-      request(router).post('/api/signup').send({}).expect(400).end(done)
-    })
-    it('userId 중복일 경우 409를 반환한다', (done) => {
-      request(router.existUsers)
-        .post('/api/signup')
-        .send({ name: 'hannah' })
-        .expect(409)
-        .end(done)
-    })
+describe('테스트 코드 작동 확인용', () => {
+  it('jest는 정상작동 한다', () => {
+    expect(true).toBe(true)
   })
+})
+ qs
+describe('idIdInDB Test', () => {
+  it('find exsited user', () => {
+    console.log(Users.items);
+    expect(Users.isIdInDB('aaaa1111')).toBe(true);
+  });
+  it('find not existed user', function () {
+    expect(Users.isIdInDB('hannah1234')).toBe(false);
+  });
+  it('empty string', function () {
+    expect(Users.isIdInDB('')).toBe(false);
+  });
+  it('param is number', function () {
+    expect(Users.isIdInDB(22)).toBe(false);
+  });
+  it('null type', function () {
+    expect(Users.isIdInDB(null)).toBe(false);
+  });
+  it('undefined type', function () {
+    expect(Users.isIdInDB(undefined)).toBe(false);
+  });
+});
 
-  test('아이디는 기존 유저의 아이디와 같지 않아야 한다.', () => {
-    expect(() => {}).not.toThrow()
+describe('get findByIdPw', function () {
+  it('find existed user', function () {
+    const user = {
+      id: 'auddn6676',
+      pw: '12345'
+    }
+    expect(Users.findByIdPw(user)).toMatchObject(user);
   })
+  it('find not existed user', function () {
+    const user = {
+      id: 'auddn667',
+      pw: '12345'
+    }
+    expect(Users.findByIdPw(user)).toBeUndefined();
+  })
+  it('user is empty object', function () {
+    const user = {};
+    expect(Users.findByIdPw(user)).toBeUndefined();
+  })
+})
 
-  test('닉네임과 아이디는 동일하지 않아야 한다.', () => {
-    expect(() => {}).not.toThrow()
-  })
-
-  test('패스워드와 아이디는 동일하지 않아야 한다.', () => {
-    expect(() => {}).not.toThrow()
-  })
-
-  test('패스워드와 아이디 닉네임은 4글자 이상이어야 하며, 숫자와 영문의 조합이다.', () => {
-    expect(() => {}).not.toThrow()
-  })
-
-  test('비밀번호 확인란과 비밀번호 란이 일치해야 한다.', () => {
-    expect(() => {}).not.toThrow()
-  })
+describe('test login request', () => {
+  it('should success login', async () => {
+    const user = {
+      username: 'auddn6676',
+      password: '12345'
+    }
+    const res = await request(app)
+      .post('/users/login')
+      .send(user)
+    expect(res.statusCode).toEqual(200)
+  });
+  it('should not success login', async () => {
+    const user = {
+      username: 'auddn667',
+      password: '12345'
+    }
+    const res = await request(app)
+      .post('/users/login')
+      .send(user)
+    expect(res.statusCode).toEqual(404)
+  });
+  it("don't have id & pw property", async () => {
+    const user = {};
+    const res = await request(app)
+      .post('/users/login')
+      .send(user)
+    expect(res.statusCode).toEqual(404)
+  });
+  it("param is undefined", async () => {
+    const user = undefined;
+    const res = await request(app)
+      .post('/users/login')
+      .send(user)
+    expect(res.statusCode).toEqual(404)
+  });
+  it("param is null", async () => {
+    const user = null;
+    const res = await request(app)
+      .post('/users/login')
+      .send(user)
+    expect(res.statusCode).toEqual(404)
+  });
 })

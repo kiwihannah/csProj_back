@@ -4,6 +4,57 @@ const Like = require('../models/like')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
 
+ //questionId, answer, userId, nickname, date
+/** schema 생성
+* @swagger
+*     components:
+*         schemas:
+*             Answers:
+*                 type: object
+*                 required:
+*                     - questionId
+*                     - answer
+*                     - userId
+*                     - nickname
+*                     - date
+*                 properties:
+*                     id:
+*                         type: object
+*                         description: The auto-generated id of the User table.
+*                     questionId:
+*                         type: string
+*                         description: The user posted questions.
+*                     answer:
+*                         type: string
+*                         description: answer for questions
+*                     userId:
+*                         type: string
+*                         description: answered user
+*                     nickname:
+*                         type: string
+*                         description: answered user nickname
+*                     date:
+*                         type: string
+*                         description: The date user answered
+*/
+
+/**
+ * @swagger
+ * /api/questions/:questionId/answers:
+ *   post:
+ *     description: posting answers
+ *     tags: [Answers]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "questionId"
+ *       in: "params"
+ *       description: "questionId"
+ *       type: "string"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+*/
 // 답변 카드 생성
 router.post(
   '/questions/:questionId/answers',
@@ -36,6 +87,23 @@ router.post(
   }
 )
 
+/**
+ * @swagger
+ * /questions/:questionId/answers:
+ *   get:
+ *     description: get a list of answers
+ *     tags: [Answers]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "questionId"
+ *       in: "params"
+ *       description: "questionId"
+ *       type: "string"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+*/
 // 모든 답변 카드 불러오기
 router.get('/questions/:questionId/answers', async (req, res) => {
   const { questionId } = req.params
@@ -66,6 +134,23 @@ router.get('/questions/:questionId/answers', async (req, res) => {
   res.json({ answers: sortedAnswers })
 })
 
+/**
+ * @swagger
+ * /api/answers/:answerId:
+ *   delete:
+ *     description: delete answer by id
+ *     tags: [Answers]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "answerId"
+ *       in: "params"
+ *       description: "answerId"
+ *       type: "string"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+*/
 // 답변 카드 삭제
 router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
@@ -84,6 +169,27 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   })
 })
 
+/**
+ * @swagger
+ * /api/answers/:answerId:
+ *   patch:
+ *     description: modify answers by id
+ *     tags: [Answers]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "answerId"
+ *       in: "params"
+ *       description: "answerId"
+ *       type: "string"
+ *     - name: "answer"
+ *       in: "body"
+ *       description: "answer"
+ *       type: "string"
+ *     responses:
+ *       "200":
+ *         description: "successful operation"
+*/
 // 답변 카드 수정
 router.patch('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
