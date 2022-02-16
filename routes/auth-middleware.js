@@ -12,8 +12,9 @@ module.exports = (req, res, next) => {
     })
   }
 
+  //process.env.JWT_SIGNATURE
   try {
-    const { userId } = jwt.verify(tokenValue, process.env.JWT_SIGNATURE)
+    const { userId } = jwt.verify(tokenValue, "hannah123")
     User.find({ userId }).then((user) => {
       res.locals.user = user
       next()
