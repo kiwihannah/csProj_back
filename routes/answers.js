@@ -161,7 +161,7 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
   const userId = res.locals.user[0].userId
 
-  const answer = await Answer.findOne({ answerId })
+  const answer = await Answer.findOne({ _id: answerId })
 
   if (answer.userId !== userId) {
     return res.status(400).json({

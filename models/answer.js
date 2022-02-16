@@ -13,9 +13,7 @@ const answerSchema = new mongoose.Schema({
   nickname: {
     type: String,
   },
-  date: {
-    type: String,
-  },
+  date: {},
 })
 
 module.exports = mongoose.model('Answer', answerSchema)
