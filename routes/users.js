@@ -69,7 +69,7 @@ router.post('/signup', async (req, res) => {
   }
 
   // 아이디 중복 확인
-  const existUsers = await User.findOne({ userId })
+  const existUsers = await User.find({ userId })
   if (existUsers.length) {
     return res.status(400).json({
       errorMessage: '아이디가 중복됩니다.',
