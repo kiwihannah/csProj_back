@@ -3,7 +3,7 @@ const Answer = require('../models/answer')
 const Like = require('../models/like')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
-const timeFromNow = require('./time-from-now')
+const timeFromNow = require('../modules/time-from-now')
 
 //questionId, answer, userId, nickname, date
 /** schema 생성

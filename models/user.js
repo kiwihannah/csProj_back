@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema({
   userPw: {
     type: String,
   },
+  profileImageUrl: {
+    type: String
+  }
 })
 
 module.exports = mongoose.model('User', userSchema)

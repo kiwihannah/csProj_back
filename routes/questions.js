@@ -3,7 +3,7 @@ const Question = require('../models/question')
 const Answer = require('../models/answer')
 const router = express.Router()
 const authMiddleware = require('./auth-middleware')
-const timeFromNow = require('./time-from-now')
+const timeFromNow = require('../modules/time-from-now')
 
 /** schema 생성
  * @swagger
