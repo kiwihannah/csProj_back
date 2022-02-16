@@ -21,7 +21,7 @@ app.use(
   swaggerUi.setup(specs, { explorer: true })
 )
 
-const port = process.env.PORT
+const port = 3000;
 connect()
 
 app.use(cors())
