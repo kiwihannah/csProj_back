@@ -159,10 +159,10 @@ router.get('/questions/:questionId/answers', async (req, res) => {
 // 답변 카드 삭제
 router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
-  const author = res.locals.user[0].userId
+  const userId = res.locals.user[0].userId
 
   try {
-    await Answer.deleteOne({ _id: answerId, author })
+    await Answer.deleteOne({ _id: answerId, userId })
   } catch (error) {
     return res.status(400).json({
       errorMessage: '권한이 없습니다.',
@@ -198,10 +198,10 @@ router.delete('/answers/:answerId', authMiddleware, async (req, res) => {
 // 답변 카드 수정
 router.patch('/answers/:answerId', authMiddleware, async (req, res) => {
   const { answerId } = req.params
-  const author = res.locals.user[0].userId
+  const userId = res.locals.user[0].userId
   const { answer } = req.body
 
-  const answerToPatch = await Answer.findOne({ _id: answerId, author })
+  const answerToPatch = await Answer.findOne({ _id: answerId, userId })
 
   if (!answerToPatch) {
     return res.status(400).json({
