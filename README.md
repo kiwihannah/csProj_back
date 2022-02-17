@@ -10,7 +10,7 @@
 It's a site for jobseekers want to prepare their interview.
 
 ### notion info
-https://grape-acrylic-1b6.notion.site/3-SA-5b33700ba4184cb3a91efc301b359dc9
+https://www.notion.so/3-SA-efd3be4d46974d05bfaadeb3fe2664dc
 
 ### demonstration on youtube
 ( ... )
