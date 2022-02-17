@@ -73,11 +73,8 @@ router.get('/questions', async (req, res) => {
   // 답변 개수 많은 질문 순으로 정렬 + 답변 개수가 같으면 최신 질문이 위로
   const sortedQuestionIds = Object.entries(answersPerQuestion)
     .sort((a, b) => {
-      if (a[1] !== b[1]) {
-        return b[1] - a[1]
-      } else {
-        return b[0] - a[0]
-      }
+      if (a[1] !== b[1]) return b[1] - a[1]
+      else if (a[0] > b[0]) return -1
     })
     .map((x) => x[0])
 
