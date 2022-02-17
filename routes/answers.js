@@ -126,8 +126,11 @@ router.get('/questions/:questionId/answers', async (req, res) => {
   // 좋아요 개수 많은 답변 순으로 정렬
   const sortedAnswerIds = Object.entries(likesPerAnswer)
     .sort((a, b) => {
-      if (a[1] !== b[1]) return b[1] - a[1]
-      else if (a[0] > b[0]) return -1
+      if (a[1] !== b[1]) {
+        return b[1] - a[1]
+      } else {
+        if (a[0] > b[0]) return -1
+      }
     })
     .map((x) => x[0])
 
