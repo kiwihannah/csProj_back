@@ -38,7 +38,7 @@ app.use('/api', bodyParser.json(), [
   questionsRouter,
   answersRouter,
   likesRouter,
-  //profileImagesRouter
+  profileImagesRouter
 ])
 // app.use(express.static("./assets"));
 
