@@ -127,7 +127,7 @@ router.post('/auth', async (req, res) => {
   }
 
   //process.env.JWT_SIGNATURE
-  const token = jwt.sign({ userId: user.userId }, "hannah123")
+  const token = jwt.sign({ userId: user.userId }, process.env.JWT_SIGNATURE)
   res.json({ token, message: '로그인 성공!' })
 })
 
