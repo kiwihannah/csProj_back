@@ -13,7 +13,7 @@ It's a site for jobseekers want to prepare their interview.
 https://www.notion.so/3-SA-efd3be4d46974d05bfaadeb3fe2664dc
 
 ### demonstration on youtube
-( ... )
+https://youtu.be/azdj9lhkELk
 
 ### db diagram
 ![image](https://user-images.githubusercontent.com/83942678/154225644-c5971690-3daa-4ed4-b01f-f6f04b2908e1.png)
