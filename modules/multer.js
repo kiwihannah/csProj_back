@@ -9,10 +9,12 @@ const upload = multer({
     s3: s3,
     bucket: 'mini-project-image-upload',
     acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
       cb(
         null,
-        `${res.locals.user[0].userId}_profile_picture` +
+        `${Date.now()}_profile_picture` +
+          '.' +
           file.originalname.split('.').pop()
       )
     },
