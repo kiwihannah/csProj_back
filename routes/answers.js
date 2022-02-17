@@ -118,7 +118,7 @@ router.get('/questions/:questionId/answers', async (req, res) => {
 
   const likes = await Like.find({})
   for (const like of likes) {
-    if (likesPerAnswer[like.answerId]) {
+    if (likesPerAnswer[like.answerId] >= 0) {
       likesPerAnswer[like.answerId]++
     }
   }

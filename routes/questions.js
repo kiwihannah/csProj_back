@@ -62,14 +62,14 @@ router.get('/questions', async (req, res) => {
   for (const question of questions) {
     answersPerQuestion[question._id] = 0
   }
-
+  
   const answers = await Answer.find({})
   for (const answer of answers) {
-    if (answersPerQuestion[answer.questionId]) {
+    if (answersPerQuestion[answer.questionId] >= 0) {
       answersPerQuestion[answer.questionId]++
     }
   }
-
+  
   // 답변 개수 많은 질문 순으로 정렬 + 답변 개수가 같으면 최신 질문이 위로
   const sortedQuestionIds = Object.entries(answersPerQuestion)
     .sort((a, b) => {
